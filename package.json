@@ -1,0 +1,24 @@
+{
+  "name": "fretboard-visualiser",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "http://chriswilcox78.github.io/fretboard-visualiser",
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-scripts": "1.1.4",
+    "snapsvg-cjs": "0.0.6",
+    "voca": "^1.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
+  }
+}
