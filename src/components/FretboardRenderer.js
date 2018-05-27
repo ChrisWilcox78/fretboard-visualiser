@@ -1,6 +1,6 @@
 import Snap from 'snapsvg-cjs';
 
-import { STRING_TUNINGS, SCALES, ARPEGGIOS } from '../MusicalConstants';
+import { STRING_TUNINGS, ARPEGGIOS } from '../MusicalConstants';
 import { getOverallNotePosition, getSequenceNotes } from './MusicalUtilities';
 
 const FRET_COUNT = 13,
@@ -142,9 +142,7 @@ class FretboardRenderer {
 
   _getCurrentSequence() {
     if (this.showScales) {
-      return SCALES.find(scale => {
-        return this.currentScale === scale.name;
-      }).intervals;
+      return this.currentScale;
     } else {
       return ARPEGGIOS.find(arpeggio => {
         return this.currentArpeggio === arpeggio.name;

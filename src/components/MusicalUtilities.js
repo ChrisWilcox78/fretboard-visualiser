@@ -1,4 +1,7 @@
-import { NOTES } from '../MusicalConstants';
+import {
+    NOTES,
+    SCALE_FAMILIES
+} from '../MusicalConstants';
 
 /**
  * Gets the musical notes for a given sequence of intervals (defined in half steps) for a given root.
@@ -44,4 +47,12 @@ function getOverallNotePosition(note, noteOfInterest) {
     }
 }
 
-export { getSequenceNotes, getOverallNotePosition };
+function getIntervalsForScale(scaleFamily, scaleName) {
+    return SCALE_FAMILIES.find(fam => fam.familyName === scaleFamily).scales.find(scale => scale.name === scaleName).intervals;
+}
+
+export {
+    getSequenceNotes,
+    getOverallNotePosition,
+    getIntervalsForScale
+};

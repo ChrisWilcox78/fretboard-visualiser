@@ -7,12 +7,15 @@ import FretboardRenderer from './components/FretboardRenderer';
 import Header from './components/header/Header';
 import TopControlGroup from './components/top-control-group/TopControlGroup';
 import SequenceSelectGroup from './components/sequence-select-group/SequenceSelectGroup';
+import { SCALE_FAMILIES } from './MusicalConstants'
+import { getIntervalsForScale } from './components/MusicalUtilities'
 
 
 class App extends Component {
   fretboardRenderer;
 
   state = {
+    currentScaleFamily: "PENTATONIC",
     currentScale: "MINOR_PENTATONIC",
     currentRoot: "C",
     currentArpeggio: "MAJOR_TRIAD",
@@ -23,7 +26,7 @@ class App extends Component {
 
   componentDidMount() {
     this.fretboardRenderer = new FretboardRenderer("#svg", this.state);
-    this.fretboardRenderer.drawFretboard();
+    this.fretboardRenderer.updateWithScale(getIntervalsForScale(this.state.currentScaleFamily, this.state.currentScale));
   }
 
   formatNameForDisplay(name) {
@@ -31,7 +34,19 @@ class App extends Component {
   }
 
   handleScaleSelection(event) {
-    this.setState({ currentScale: event.target.value, currentSequenceName: this.formatNameForDisplay(event.target.value) }, () => this.fretboardRenderer.updateWithScale(this.state.currentScale));
+    this.setState({ 
+      currentScale: event.target.value, 
+      currentSequenceName: this.formatNameForDisplay(event.target.value) 
+    }, () => this.fretboardRenderer.updateWithScale(getIntervalsForScale(this.state.currentScaleFamily,this.state.currentScale)));
+  }
+
+  handleScaleFamilySelection(event) {
+    let scaleFamilyToUse = event.target.value,
+        scaleToUse = SCALE_FAMILIES.find(fam => fam.familyName === scaleFamilyToUse).defaultScale;
+    this.setState({ 
+      currentScaleFamily: scaleFamilyToUse, 
+      currentScale: scaleToUse, 
+      currentSequenceName: this.formatNameForDisplay(scaleToUse) }, () => this.fretboardRenderer.updateWithScale(getIntervalsForScale(this.state.currentScaleFamily, this.state.currentScale)));
   }
 
   handleArpeggioSelection(event) {
@@ -54,7 +69,7 @@ class App extends Component {
 
   updateSequenceDisplay() {
     if (this.state.showScales) {
-      this.fretboardRenderer.updateWithScale(this.state.currentScale);
+      this.fretboardRenderer.updateWithScale(getIntervalsForScale(this.state.currentScaleFamily, this.state.currentScale));
     }
     else {
       this.fretboardRenderer.updateWithArpeggio(this.state.currentArpeggio);
@@ -94,7 +109,9 @@ class App extends Component {
         <SequenceSelectGroup
           showScales={this.state.showScales}
           currentScale={this.state.currentScale}
+          currentScaleFamily={this.state.currentScaleFamily}
           scaleChangeFn={event => this.handleScaleSelection(event)}
+          scaleFamilyChangeFn={event => this.handleScaleFamilySelection(event)}
           currentArpeggio={this.state.currentArpeggio}
           arpeggioChangeFn={event => this.handleArpeggioSelection(event)}
           nameFormatter={name => this.formatNameForDisplay(name)}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { SCALES, ARPEGGIOS } from '../../MusicalConstants';
+import { SCALE_FAMILIES, ARPEGGIOS } from '../../MusicalConstants';
 import './SequenceSelectGroup.css';
 
 class SequenceSelectGroup extends Component {
@@ -8,7 +8,9 @@ class SequenceSelectGroup extends Component {
   props = {
     showScales: undefined,
     currentScale: undefined,
+    currentScaleFamily: undefined,
     scaleChangeFn: undefined,
+    scaleFamilyChangeFn: undefined,
     currentArpeggio: undefined,
     arpeggioChangeFn: undefined,
     nameFormatter: undefined
@@ -20,13 +22,25 @@ class SequenceSelectGroup extends Component {
     });
   }
 
+  buildFamilySelect(familyNames) {
+    return familyNames.map(familyName => {
+      return <option key={familyName} value={familyName}>{this.props.nameFormatter(familyName)}</option>;
+    });
+  }
+
   render() {
     return (
       <div className="sequence-select-group">
+        <span className="scale-family-select-container select-container">
+          Scale Family:
+          <select disabled={!this.props.showScales} value={this.props.currentScaleFamily} onChange={this.props.scaleFamilyChangeFn}>
+            {this.buildFamilySelect(SCALE_FAMILIES.map(fam => fam.familyName))}
+          </select>
+        </span>
         <span className="scale-select-container select-container">
           Scale:
           <select disabled={!this.props.showScales} value={this.props.currentScale} onChange={this.props.scaleChangeFn}>
-            {this.buildSequenceSelect(SCALES)}
+            {this.buildSequenceSelect(SCALE_FAMILIES.find(fam => fam.familyName === this.props.currentScaleFamily).scales)}
           </select>
         </span>
         <span className="arpeggio-select-container select-container">
