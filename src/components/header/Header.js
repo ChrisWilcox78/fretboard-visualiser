@@ -4,7 +4,7 @@ import './Header.css';
 
 class Header extends Component {
 
-  props = {
+  static defaultProps = {
     currentRoot: undefined,
     currentSequenceName: undefined
   };

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { Button } from 'semantic-ui-react'
 
 import './TopControlGroup.css';
 import { NOTES } from '../../MusicalConstants';
 
 class TopControlGroup extends Component {
 
-  props = {
+  static defaultProps = {
     currentRoot: undefined,
     rootChangeFn: undefined,
     showScales: undefined,
@@ -13,6 +14,7 @@ class TopControlGroup extends Component {
     showNotes: undefined,
     markerToggleFn: undefined
   }
+
 
   buildRootSelect() {
     return NOTES.map(note => {
@@ -29,12 +31,24 @@ class TopControlGroup extends Component {
             {this.buildRootSelect()}
           </select>
         </span>
-        <button onClick={this.props.sequenceToggleFn}>
-          {this.props.showScales ? "Show Arpeggios" : "Show Scales"}
-        </button>
-        <button onClick={this.props.markerToggleFn}>
-          {this.props.showNotes ? "Show Degrees" : "Show Notes"}
-        </button>
+        <Button.Group className="sequence-buttons">
+          <Button onClick={() => this.props.sequenceToggleFn(true)} active={this.props.showScales}>
+            Show Scales
+          </Button>
+          <Button.Or/>
+          <Button onClick={() => this.props.sequenceToggleFn(false)} active={!this.props.showScales}>
+            Show Arpeggios
+          </Button>
+        </Button.Group>
+        <Button.Group>
+          <Button onClick={() => this.props.markerToggleFn(false)} active={!this.props.showNotes}>
+            Show Degrees
+          </Button>
+          <Button.Or/>
+          <Button onClick={() => this.props.markerToggleFn(true)} active={this.props.showNotes}>
+            Show Notes
+          </Button>
+        </Button.Group>
       </div>
     );
   }

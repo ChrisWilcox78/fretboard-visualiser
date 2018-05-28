@@ -7,6 +7,8 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-scripts": "1.1.4",
+    "semantic-ui-css": "^2.3.1",
+    "semantic-ui-react": "^0.80.2",
     "snapsvg-cjs": "0.0.6",
     "voca": "^1.4.0"
   },

@@ -1,18 +1,6 @@
 .top-control-group {
   margin: 10px;
 }
-
-.top-control-group button {
-  font-size: 1.1em;
-  width: 150px;
-  border-radius: 4px;
-	cursor: pointer;
-  border: none;
-	padding: 5px 10px;
-  background-color: #eee;
-  margin-right: 5px;
-}
-
-.top-control-group button:hover {
-	background-color: #cfd8dc;
+.sequence-buttons.ui.buttons {
+  margin-right: 10px;
 }

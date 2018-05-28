@@ -5,7 +5,7 @@ import './SequenceSelectGroup.css';
 
 class SequenceSelectGroup extends Component {
 
-  props = {
+  static defaultProps = {
     showScales: undefined,
     currentScale: undefined,
     currentScaleFamily: undefined,

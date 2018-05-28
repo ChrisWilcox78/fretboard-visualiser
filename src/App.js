@@ -57,14 +57,11 @@ class App extends Component {
     this.setState({ currentRoot: event.target.value }, () => this.fretboardRenderer.updateWithRoot(this.state.currentRoot));
   }
 
-  handleSequenceToggle() {
-    this.setState((prevState) => {
-      return {
-        showScales: !prevState.showScales,
-        currentSequenceName: prevState.showScales ? this.formatNameForDisplay(this.state.currentArpeggio) :
-          this.formatNameForDisplay(this.state.currentScale)
-      };
-    }, this.updateSequenceDisplay);
+  updateSequenceDisplayState(showScales) {
+    this.setState({
+      showScales: showScales,
+      currentSequenceName: showScales ? this.formatNameForDisplay(this.state.currentScale) :  this.formatNameForDisplay(this.state.currentArpeggio)
+    }, this.updateSequenceDisplay)
   }
 
   updateSequenceDisplay() {
@@ -76,9 +73,9 @@ class App extends Component {
     }
   }
 
-  handlePositionDisplayToggle() {
-    this.setState((prevState) => {
-      return { showNotes: !prevState.showNotes }
+  updateMarkerDisplayState(showNotes) {
+    this.setState({ 
+      showNotes: showNotes 
     }, this.updateMarkerDisplay);
   }
 
@@ -102,9 +99,9 @@ class App extends Component {
           currentRoot={this.state.currentRoot}
           rootChangeFn={event => this.handleRootSelection(event)}
           showScales={this.state.showScales}
-          sequenceToggleFn={() => this.handleSequenceToggle()}
+          sequenceToggleFn={showScales => this.updateSequenceDisplayState(showScales)}
           showNotes={this.state.showNotes}
-          markerToggleFn={() => this.handlePositionDisplayToggle()}
+          markerToggleFn={showNotes => this.updateMarkerDisplayState(showNotes)}
         />
         <SequenceSelectGroup
           showScales={this.state.showScales}
