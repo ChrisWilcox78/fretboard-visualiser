@@ -2,3 +2,15 @@
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+.scale-family-dropdown.ui.selection.dropdown {
+  min-width: 11em;
+}
+
+.scale-dropdown.ui.selection.dropdown {
+  min-width: 13em;
+}
+
+.arpeggio-dropdown.ui.selection.dropdown {
+  min-width: 12em;
+}

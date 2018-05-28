@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Dropdown } from 'semantic-ui-react'
 
 import { SCALE_FAMILIES, ARPEGGIOS } from '../../MusicalConstants';
 import './SequenceSelectGroup.css';
@@ -18,13 +19,19 @@ class SequenceSelectGroup extends Component {
 
   buildSequenceSelect(sequenceCollection) {
     return sequenceCollection.map(sequence => {
-      return <option key={sequence.name} value={sequence.name}>{this.props.nameFormatter(sequence.name)}</option>;
+      return {  
+        value: sequence.name,
+        text: this.props.nameFormatter(sequence.name)
+      };
     });
   }
 
   buildFamilySelect(familyNames) {
     return familyNames.map(familyName => {
-      return <option key={familyName} value={familyName}>{this.props.nameFormatter(familyName)}</option>;
+      return {
+        value: familyName,
+        text: this.props.nameFormatter(familyName)
+      };
     });
   }
 
@@ -32,22 +39,37 @@ class SequenceSelectGroup extends Component {
     return (
       <div className="sequence-select-group">
         <span className="scale-family-select-container select-container">
-          Scale Family:
-          <select disabled={!this.props.showScales} value={this.props.currentScaleFamily} onChange={this.props.scaleFamilyChangeFn}>
-            {this.buildFamilySelect(SCALE_FAMILIES.map(fam => fam.familyName))}
-          </select>
+          <span className="dropdown-label">Scale Family:</span>
+          <Dropdown 
+            className="scale-family-dropdown"
+            disabled={!this.props.showScales} 
+            value={this.props.currentScaleFamily} 
+            selection
+            onChange={(event, family) => this.props.scaleFamilyChangeFn(family.value)}
+            options={this.buildFamilySelect(SCALE_FAMILIES.map(fam => fam.familyName))}
+          />
         </span>
         <span className="scale-select-container select-container">
-          Scale:
-          <select disabled={!this.props.showScales} value={this.props.currentScale} onChange={this.props.scaleChangeFn}>
-            {this.buildSequenceSelect(SCALE_FAMILIES.find(fam => fam.familyName === this.props.currentScaleFamily).scales)}
-          </select>
+          <span className="dropdown-label">Scale:</span>
+          <Dropdown 
+            className="scale-dropdown"
+            disabled={!this.props.showScales} 
+            value={this.props.currentScale} 
+            selection
+            onChange={(event, scale) => this.props.scaleChangeFn(scale.value)}
+            options={this.buildSequenceSelect(SCALE_FAMILIES.find(fam => fam.familyName === this.props.currentScaleFamily).scales)}
+          />
         </span>
         <span className="arpeggio-select-container select-container">
-          Arpeggio:
-          <select disabled={this.props.showScales} value={this.props.currentArpeggio} onChange={this.props.arpeggioChangeFn}>
-            {this.buildSequenceSelect(ARPEGGIOS)}
-          </select>
+          <span className="dropdown-label">Arpeggio:</span>
+          <Dropdown 
+            className="arpeggio-dropdown"
+            disabled={this.props.showScales} 
+            value={this.props.currentArpeggio}
+            selection
+            onChange={(event, arpeggio) => this.props.arpeggioChangeFn(arpeggio.value)}
+            options={this.buildSequenceSelect(ARPEGGIOS)}
+          />
         </span>
       </div>
     );

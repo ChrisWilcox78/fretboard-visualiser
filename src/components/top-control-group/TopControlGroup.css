@@ -1,6 +1,11 @@
 .top-control-group {
   margin: 10px;
 }
+
 .sequence-buttons.ui.buttons {
   margin-right: 10px;
+}
+
+.root-dropdown.ui.selection.dropdown {
+  min-width: 5em;
 }

@@ -17,3 +17,7 @@
   padding: 2px;
   border-radius: 4px;
 }
+
+.dropdown-label {
+  margin-right: 5px;
+}

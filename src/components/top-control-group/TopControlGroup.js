@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react'
+import { Button, Dropdown } from 'semantic-ui-react'
 
 import './TopControlGroup.css';
 import { NOTES } from '../../MusicalConstants';
@@ -16,9 +16,12 @@ class TopControlGroup extends Component {
   }
 
 
-  buildRootSelect() {
+  buildRootOptions() {
     return NOTES.map(note => {
-      return <option key={note} value={note}>{note}</option>;
+      return { 
+        value: note,
+        text: note
+      };
     });
   }
 
@@ -26,10 +29,14 @@ class TopControlGroup extends Component {
     return (
       <div className="top-control-group">
         <span className="root-select-container select-container">
-          Root:
-          <select value={this.props.currentRoot} onChange={event => this.props.rootChangeFn(event)}>
-            {this.buildRootSelect()}
-          </select>
+          <span className="dropdown-label">Root:</span>
+          <Dropdown 
+            value={this.props.currentRoot} 
+            selection
+            onChange={(event, option) => this.props.rootChangeFn(option.value)}
+            options={this.buildRootOptions()}
+            className="root-dropdown"
+          />
         </span>
         <Button.Group className="sequence-buttons">
           <Button onClick={() => this.props.sequenceToggleFn(true)} active={this.props.showScales}>

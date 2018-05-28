@@ -33,28 +33,27 @@ class App extends Component {
     return replaceAll(titleCase(name), '_', ' ');
   }
 
-  handleScaleSelection(event) {
+  handleScaleSelection(selectedScale) {
     this.setState({ 
-      currentScale: event.target.value, 
-      currentSequenceName: this.formatNameForDisplay(event.target.value) 
+      currentScale: selectedScale, 
+      currentSequenceName: this.formatNameForDisplay(selectedScale) 
     }, () => this.fretboardRenderer.updateWithScale(getIntervalsForScale(this.state.currentScaleFamily,this.state.currentScale)));
   }
 
-  handleScaleFamilySelection(event) {
-    let scaleFamilyToUse = event.target.value,
-        scaleToUse = SCALE_FAMILIES.find(fam => fam.familyName === scaleFamilyToUse).defaultScale;
+  handleScaleFamilySelection(selectedFamily) {
+    let scaleToUse = SCALE_FAMILIES.find(fam => fam.familyName === selectedFamily).defaultScale;
     this.setState({ 
-      currentScaleFamily: scaleFamilyToUse, 
+      currentScaleFamily: selectedFamily, 
       currentScale: scaleToUse, 
       currentSequenceName: this.formatNameForDisplay(scaleToUse) }, () => this.fretboardRenderer.updateWithScale(getIntervalsForScale(this.state.currentScaleFamily, this.state.currentScale)));
   }
 
-  handleArpeggioSelection(event) {
-    this.setState({ currentArpeggio: event.target.value, currentSequenceName: this.formatNameForDisplay(event.target.value) }, () => this.fretboardRenderer.updateWithArpeggio(this.state.currentArpeggio));
+  handleArpeggioSelection(selectedArpeggio) {
+    this.setState({ currentArpeggio: selectedArpeggio, currentSequenceName: this.formatNameForDisplay(selectedArpeggio) }, () => this.fretboardRenderer.updateWithArpeggio(this.state.currentArpeggio));
   }
 
-  handleRootSelection(event) {
-    this.setState({ currentRoot: event.target.value }, () => this.fretboardRenderer.updateWithRoot(this.state.currentRoot));
+  handleRootSelection(newRoot) {
+    this.setState({ currentRoot: newRoot }, () => this.fretboardRenderer.updateWithRoot(this.state.currentRoot));
   }
 
   updateSequenceDisplayState(showScales) {
